@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class ConsultationStatusSeeder extends Seeder
 {
@@ -13,6 +14,19 @@ class ConsultationStatusSeeder extends Seeder
      */
     public function run()
     {
-        //
+        DB::table('consultation_statuses')->insert([
+            [
+            "status" => "scheduled",
+            ],
+            [
+            "status" => "canceled",
+            ],
+            [
+            "status" => "missed",
+            ],
+            [
+            "status" => "done",
+            ],
+        ]);
     }
 }

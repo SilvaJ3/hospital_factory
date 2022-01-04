@@ -18,7 +18,8 @@ class CreateConsultationsTable extends Migration
             $table->foreignId("doctor_id")->constrained();
             $table->integer("patient_id");
             $table->foreign("patient_id")->on("patients")->references("register_id");
-            $table->time("schedule_time");
+            $table->date("schedule_time");
+            $table->time("schedule_hours");
             $table->foreignId("consultation_statuses_id")->constrained();
             $table->foreignId("local_id")->constrained();
             $table->timestamps();
