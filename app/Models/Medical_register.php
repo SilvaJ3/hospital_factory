@@ -12,7 +12,7 @@ class Medical_register extends Model
 		return $this->belongsTo(Disease::class, "disease_id", "id");
 	}
     public function status(){
-		return $this->belongsTo(Medical_register_status::class, "status_id", "id");
+		return $this->belongsTo(Medical_register_status::class, "medical_register_statuses_id", "id");
 	}
   public function patients() {
   return $this->belongsTo(Patient::class, "patient_id", "register_id");

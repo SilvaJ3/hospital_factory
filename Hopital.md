@@ -38,7 +38,7 @@ Le but de la plateforme est de pouvoir suivre les hôpitaux, docteurs et patient
 ⚠️ **Attention, un médecin ne peut pas avoir une consultation au même moment avec 2 patients et un patient ne peut pas avoir plus d'une consultation par jour** ⚠️
 
 4) Afficher les données dans un format de simple tableau
-    - Avoir une page où l'on peut voir les 3 hôpitaux
-    - Page hôpital avec consultation dans l'ordre (date, nom docteur, local, nom patient, statut consultation, maladie si diagnostiquée)
-    - Page avec tous les patients
-    - Page dossier médical d'un patient sélectionné.
+    - Avoir une page où l'on peut voir les 3 hôpitaux - OK
+    - Page hôpital avec consultation dans l'ordre (date, nom docteur, local, nom patient, statut consultation, maladie si diagnostiquée) - OK
+    - Page avec tous les patients - OK
+    - Page dossier médical d'un patient sélectionné. - OK
