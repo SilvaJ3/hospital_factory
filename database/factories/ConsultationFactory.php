@@ -26,6 +26,7 @@ class ConsultationFactory extends Factory
         $end_date = Carbon::createFromFormat("Y/m/d", "2022/01/31");
         $starting_time = Carbon::createFromFormat("H:i", "08:00");
         $end_time = Carbon::createFromFormat("H:i", "19:00");
+        $index = 0;
 
         do {
             $date = $this->faker->dateTimeBetween($starting_date, $end_date);
@@ -37,28 +38,14 @@ class ConsultationFactory extends Factory
         } while ($patientAvailable || $doctorAvailable);
 
         if ($date > Carbon::now()) {
-            $status = Consultation_status::inRandomOrder()->first()->id;
-        } else {
-            $status = Consultation_status::inRandomOrder()->first()->id;
-        }
-
-        if ($status == 4) {
-
-            $disease = Disease::inRandomOrder()->first();
-            if ($disease->curable) {
-                $status_disease = Medical_register_status::inRandomOrder()->first();
-            } else {
-                $status_disease = Medical_register_status::all()->where("status", "incurable")->first();
+            $shuffleArray = [1, 1, 1, 2, 1, 1, 1, 3, 1, 1, 1, 4];
+            if($index == 12) {
+                $index = 0;
             }
-
-            DB::table("medical_registers")->insert([
-                [
-                    "patient_id" => $patient->register_id,
-                    "medical_register_statuses_id" => $status_disease->id,
-                    "disease_id" => $disease->id,
-                    "consultation_id" => Consultation::all()->count()+1
-                ],
-            ]);
+            $status = Consultation_status::where("id", $shuffleArray[$index])->first();
+            $index++;
+        } else {
+            $status = Consultation_status::inRandomOrder()->first();
         }
 
         return [
@@ -66,9 +53,11 @@ class ConsultationFactory extends Factory
             'patient_id' => $patient->register_id,
             'schedule_time' => Carbon::parse($date)->format('Y/m/d'),
             'schedule_hours' => Carbon::parse($time)->format('H:i'),
-            'consultation_statuses_id' => $status,
+            'consultation_statuses_id' => $status->id,
             'local_id' => Local::inRandomOrder()->first()->id,
         ];
 
+        
     }
+            
 }

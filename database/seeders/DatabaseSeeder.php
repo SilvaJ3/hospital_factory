@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Consultation;
 use App\Models\Doctor;
 use App\Models\Local;
 use App\Models\Patient;
@@ -26,6 +27,9 @@ class DatabaseSeeder extends Seeder
             LocalTypeSeeder::class,
             LocalSeeder::class,
             ConsultationSeeder::class,
+            MedicalRegisterSeeder::class,
         ]);
+
+
     }
 }

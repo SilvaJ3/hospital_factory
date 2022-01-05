@@ -32,8 +32,8 @@ Le but de la plateforme est de pouvoir suivre les hôpitaux, docteurs et patient
     - Factory de 200 patients - OK
     - Seed de 30 maladies que vous devez chercher en ligne (dont 10 incurable) - OK
     - Factory de 150 locaux (au hasard dans les hôpitaux, mais un hôpital ne peut pas avoir plus de 80 locaux) - OK
-    - Factory de 2000 Consultations au hasard entre 01/06/2021 au 31/01/2022 et heures entre 8h et 19h. Un statut doit lui être attribué avec une chance de 3 sur 4 d'être "Fait" si la date est passée. Si une consultation a un statut "Fait" un dossier médical doit être créé pour le patient.
-    - Le dossier médical doit prendre une maladie et un statut au hasard. Attention au cas des maladies incurables. Pas plus de 5 dossiers médicaux pour un client donné.
+    - Factory de 2000 Consultations au hasard entre 01/06/2021 au 31/01/2022 et heures entre 8h et 19h. Un statut doit lui être attribué avec une chance de 3 sur 4 d'être "Fait" si la date est passée. Si une consultation a un statut "Fait" un dossier médical doit être créé pour le patient. - OK
+    - Le dossier médical doit prendre une maladie et un statut au hasard. Attention au cas des maladies incurables. Pas plus de 5 dossiers médicaux pour un client donné. - OK
 
 ⚠️ **Attention, un médecin ne peut pas avoir une consultation au même moment avec 2 patients et un patient ne peut pas avoir plus d'une consultation par jour** ⚠️
 
