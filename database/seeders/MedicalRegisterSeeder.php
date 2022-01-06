@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Consultation;
 use App\Models\Disease;
+use App\Models\Medical_register;
 use App\Models\Medical_register_status;
 use App\Models\Patient;
 use Illuminate\Database\Seeder;
@@ -22,19 +23,31 @@ class MedicalRegisterSeeder extends Seeder
         $consultations = Consultation::where("consultation_statuses_id", 4)->get();
 
         foreach ($consultations as $consultation) {
-            
 
+            $patient = Patient::where("register_id",$consultation->patient_id)->first();
+            $medicals = Medical_register::where("patient_id", $patient->register_id)->get();
+            
             $disease = Disease::inRandomOrder()->first();
+            if ($medicals->count() > 1) {
+                $medicals_registers = [];
+                foreach ($medicals as $medical) {
+                    array_push($medicals_registers, $medical);
+                }
+                foreach ($medicals_registers as $medical) {
+                    if ($disease->id == $medical->disease_id) {
+                        $disease = Disease::where("name", "!=", $disease)->inRandomOrder()->first();
+                    }
+                }
+            }
+
             if ($disease->curable) {
                 $status_disease = Medical_register_status::where("status", "!=", "incurable")->inRandomOrder()->first();
             } else {
                 $status_disease = Medical_register_status::all()->where("status", "incurable")->first();
             }
 
-            $patient = Patient::where("register_id",$consultation->patient_id)->first();
+            if ($medicals->count() < 5) {
 
-
-            if ($patient->registers()->count() < 6) {
                 DB::table("medical_registers")->insert([
                         [
                                 "patient_id" => $patient->register_id,

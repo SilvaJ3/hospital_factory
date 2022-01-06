@@ -22,13 +22,13 @@ class ConsultationFactory extends Factory
      */
     public function definition()
     {
-        $starting_date = Carbon::createFromFormat("Y/m/d", "2021/06/01");
-        $end_date = Carbon::createFromFormat("Y/m/d", "2022/01/31");
+        $starting_date = Carbon::parse('2021-06-01');
+        $end_date = Carbon::parse('2022-01-31');
         $starting_time = Carbon::createFromFormat("H:i", "08:00");
         $end_time = Carbon::createFromFormat("H:i", "19:00");
-        $index = 0;
 
         do {
+            // $date = $end_date->subDays(rand(0, 244));
             $date = $this->faker->dateTimeBetween($starting_date, $end_date);
             $time = $this->faker->dateTimeBetween($starting_time, $end_time);
             $patient = Patient::inRandomOrder()->first();
@@ -37,15 +37,17 @@ class ConsultationFactory extends Factory
             $doctorAvailable = $doctor->consultations()->where('schedule_hours', $time)->where('schedule_time', $date)->first();
         } while ($patientAvailable || $doctorAvailable);
 
-        if ($date > Carbon::now()) {
-            $shuffleArray = [1, 1, 1, 2, 1, 1, 1, 3, 1, 1, 1, 4];
-            if($index == 12) {
-                $index = 0;
-            }
+        if ($date < Carbon::now()) {
+        // if ($today->greaterThan($date)) {
+            // 3 chances sur 4 que le rendez-vous a été fait si la date est passée
+            $shuffleArray = [2, 4, 4, 4, 3, 4, 4, 4];
+            $index = array_rand($shuffleArray);
             $status = Consultation_status::where("id", $shuffleArray[$index])->first();
-            $index++;
         } else {
-            $status = Consultation_status::inRandomOrder()->first();
+            // 1 chance sur 3 que le rendez-vous futur soit déjà annulé
+            $shuffleArray = [1, 1, 2];
+            $index = array_rand($shuffleArray);
+            $status = Consultation_status::where("id", $shuffleArray[$index])->first();
         }
 
         return [

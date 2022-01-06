@@ -5,6 +5,7 @@ use App\Models\Hospital;
 use App\Models\Local;
 use App\Models\Medical_register;
 use App\Models\Patient;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,7 +29,7 @@ Route::get("/hospital/{id}", function($id){
     $locals = Local::where("hospital_id", $id)->get();
     $consultations_filter = [];
     foreach ($locals as $local) {
-        $consultations = Consultation::where("local_id", $local->id)->get();
+        $consultations = Consultation::where("local_id", $local->id)->orderByDesc("schedule_time")->get();
         foreach ($consultations as $consultation) {
             array_push($consultations_filter, $consultation);
         }
