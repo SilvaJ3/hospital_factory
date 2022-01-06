@@ -34,7 +34,50 @@ Route::get("/hospital/{id}", function($id){
             array_push($consultations_filter, $consultation);
         }
     }
-    return view("pages.hospital", compact("hospital", "consultations_filter"));
+
+    usort($consultations_filter, function ($item1, $item2) {
+        return $item2['schedule_time'] <=> $item1['schedule_time'];
+    });
+
+    $collection_data = [];
+
+    foreach ($consultations_filter as $consultation) {
+        if($consultation->register()->first()) {
+            // dd($consultation->register()->first()->status()->first()->status);
+            $collection = 
+            (object) [
+                "id" => $consultation->id,
+                "doctor" => $consultation->doctors()->first()->name,
+                "patient_id" => $consultation->patients()->first()->register_id,
+                "patient_fname" => $consultation->patients()->first()->fname,
+                "patient_lname" => $consultation->patients()->first()->lname,
+                "schedule_time" => $consultation->schedule_time,
+                "schedule_hours" => $consultation->schedule_hours,
+                "status" => $consultation->status()->first()->status,
+                "diagnostic" => $consultation->register()->first()->status()->first()->status,
+                "local" => $consultation->local()->first()->name
+            ];
+        } else {
+            $collection = 
+            (object) [
+                "id" => $consultation->id,
+                "doctor" => $consultation->doctors()->first()->name,
+                "patient_id" => $consultation->patients()->first()->register_id,
+                "patient_fname" => $consultation->patients()->first()->fname,
+                "patient_lname" => $consultation->patients()->first()->lname,
+                "schedule_time" => $consultation->schedule_time,
+                "schedule_hours" => $consultation->schedule_hours,
+                "status" => $consultation->status()->first()->status,
+                "diagnostic" => "null",
+                "local" => $consultation->local()->first()->name
+            ];;
+        }
+        array_push($collection_data, $collection);
+
+
+    }
+    // dd($collection_data);
+    return view("pages.hospital", compact("hospital", "collection_data"));
 });
 
 Route::get("/patients", function(){

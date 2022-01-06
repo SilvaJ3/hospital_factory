@@ -23,4 +23,7 @@ class Consultation extends Model
   public function local(){
   return $this->belongsTo(Local::class, "local_id", "id");
   }
+  public function doctor_name(){
+    return $this->doctors()->first()->name;
+  }
 }

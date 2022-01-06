@@ -35,7 +35,7 @@
                                     </div>
                                 </div>
                                 <div>
-                                    @foreach ($consultations_filter as $consultation)
+                                    @foreach ($collection_data as $consultation)
                                         <div class="flex justify-between border text-sm font-normal mt-4">
                                             <div class="px-2 flex justify-start">
                                                 <span>{{$consultation->id}}</span>
@@ -44,24 +44,19 @@
                                                 <span>{{$consultation->schedule_time}}</span>
                                             </div>
                                             <div class="px-2 flex justify-start">
-                                                <span>{{$consultation->doctors()->first()->name}}</span>
+                                                <span>{{$consultation->doctor}}</span>
                                             </div>
                                             <div class="px-2 flex justify-start">
-                                                <span>{{$consultation->local()->first()->name}}</span>
+                                                <span>{{$consultation->local}}</span>
                                             </div>
                                             <div class="px-2 flex justify-start">
-                                                <a href="/patients/{{$consultation->patients()->first()->register_id}}">{{$consultation->patients()->first()->fname}} {{$consultation->patients()->first()->lname}}</a>
+                                                <a href="/patients/{{$consultation->patient_id}}">{{$consultation->patient_fname}} {{$consultation->patient_lname}}</a>
                                             </div>
                                             <div class="px-2 flex justify-start">
-                                                <span>{{$consultation->status()->first()->status}}</span>
+                                                <span>{{$consultation->status}}</span>
                                             </div>
                                             <div class="px-2 flex justify-start">
-                                                @if ($consultation->register()->first())
-                                                    <span>{{$consultation->register()->first()->status()->first()->status}}</span>
-                                                @else
-                                                    <span>null</span> 
-                                                    {{-- Le statut est null si le rendez-vous a été raté, annulé ou est encore scheduled --}}
-                                                @endif
+                                                <span>{{$consultation->diagnostic}}</span>
                                             </div>
                                         </div>
                                     @endforeach
